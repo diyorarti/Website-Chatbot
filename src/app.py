@@ -11,6 +11,7 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
 load_dotenv()
+DB_PATH = "chromadb_storage"
 
 def get_vectorstore_from_url(url):
     # get the text in document form
@@ -22,7 +23,7 @@ def get_vectorstore_from_url(url):
     document_chunks = text_splitter.split_documents(document)
     
     # create a vectorstore from the chunks
-    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())
+    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(), persist_directory=DB_PATH)
 
     return vector_store
 
